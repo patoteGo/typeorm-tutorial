@@ -52,8 +52,37 @@ app.put('/users/:uuid', async(req: Request, res: Response) => {
 })
 
 // DELETE
+app.delete('/users/:uuid', async(req: Request, res: Response) => {
+    const uuid = req.params.uuid
+
+    try {
+        const user = await User.findOneOrFail({ uuid })
+        await user.remove()
+        return res.status(204).json({message: "user deleted sucessfull"})
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json(err)
+        
+    }
+})
+
 
 // FIND
+app.get('/users/:uuid', async(req: Request, res: Response) => {
+    const uuid = req.params.uuid
+
+    try {
+        const user = await User.findOneOrFail({ uuid })
+        return res.status(200).json(user)
+
+    } catch (err) {
+        console.log(err)
+        return res.status(404).json(err)
+        
+    }
+})
+
 
 createConnection().then(async () => {
     app.listen(5000, () => console.log('Server up at http://localhost:5000'));
