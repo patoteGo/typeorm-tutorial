@@ -22,4 +22,9 @@ export default abstract class Model extends BaseEntity {
     toJSON(){
         return { ...this, id: undefined }
     }
+
+    constructor(model?: Partial<any>) {
+        super()
+        Object.assign(this, model)
+    }
 }

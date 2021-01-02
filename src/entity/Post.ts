@@ -1,8 +1,9 @@
-import {Entity, Column} from "typeorm";
+import {Entity, Column, ManyToOne} from "typeorm";
 import Model from "./Model";
+import { User } from "./User";
 
 @Entity('posts')
-export class User extends Model {
+export class Post extends Model {
 
     @Column()
     title: string;
@@ -10,7 +11,9 @@ export class User extends Model {
     @Column()
     body: string;
 
-    @Column({ type: 'uuid' })
-    uuid: string
+    @ManyToOne( () => User )
+    user: User;
+
+ 
 
 }
